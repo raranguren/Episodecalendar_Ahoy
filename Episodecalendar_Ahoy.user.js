@@ -5,8 +5,8 @@
 // @tester					Ana García
 // @description				Adds links to torrent and subs into episodecalendar.com
 	
-// @version        			3.0
-// @date           			2016/08/21
+// @version        			3.1
+// @date           			2016/09/05
 // @grant                   none
 
 // @include        			http://*episodecalendar.com/calendar*
