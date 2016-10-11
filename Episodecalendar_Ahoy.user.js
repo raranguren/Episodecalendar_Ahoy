@@ -3,7 +3,7 @@
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
 	
-// @version      4.0
+// @version      4.1
 // @date         2016/09/10
 // @grant        none
 
@@ -16,7 +16,7 @@ searchURL = 'http://extratorrent.cc/search/?search=*'
 magnetIcon = "http://images4et.com/images/magnet.png"
 
 // This part runs in episodecalendar.com
-//////////////////////////////////////////
+// =====================================
 
 shows = document.getElementsByClassName("show");
 episodes = document.getElementsByClassName("episode")
@@ -38,26 +38,26 @@ if (boxes.length) for (j in boxes) if (j>0) { i = j-1;
 }
 
 // This part runs in extratorrent.cc when there is a list of seeders
-////////////////////////////////////////////////////////////////////
+// =================================================================
 
 seeds = document.getElementsByClassName("sy")
 minSeeds = 1000
-if (seeds.length) for (i in seeds) if (seeds[i].innerHTML > minSeeds) {
+if (seeds.length) for (i in seeds) if (+seeds[i].innerHTML > minSeeds) {
 	//for each <td class="sy"> that has a number greater than the previously found
 	minHref = seeds[i].parentNode.getElementsByClassName("tli")[0].getElementsByTagName("a")[0].href
 }
 //redirect if there was a good torrent found
 if (typeof(minHref) == "string") window.location.replace(minHref)
 
-// This part finds magnet links and runs them
-/////////////////////////////////////////////
+// This part finds a magnet link and runs it
+// =========================================
 
 links = document.getElementsByTagName("a")
 for (i in links) if (links[i].href.substring(0,7) == "magnet:") 
 		window.location.replace(links[i].href)
 
 // functions
-////////////
+// =========
 
 function episodeName(show, season, episode, x = false) {
 	if (x) {
