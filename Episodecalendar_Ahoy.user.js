@@ -3,7 +3,7 @@
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
 	
-// @version      4.1
+// @version      4.2
 // @date         2016/09/10
 // @grant        none
 
@@ -42,19 +42,18 @@ if (boxes.length) for (j in boxes) if (j>0) { i = j-1;
 
 seeds = document.getElementsByClassName("sy")
 minSeeds = 1000
-if (seeds.length) for (i in seeds) if (+seeds[i].innerHTML > minSeeds) {
+if (seeds.length) for (i in seeds) if (+seeds[i].textContent > minSeeds) {
 	//for each <td class="sy"> that has a number greater than the previously found
-	minHref = seeds[i].parentNode.getElementsByClassName("tli")[0].getElementsByTagName("a")[0].href
+	magnetTitle = seeds[i].parentNode.getElementsByClassName("tli")[0].textContent
+	magnetHref = seeds[i].parentNode.getElementsByTagName("a")[1].href
+	minSeeds = +seeds[i].textContent
 }
-//redirect if there was a good torrent found
-if (typeof(minHref) == "string") window.location.replace(minHref)
-
-// This part finds a magnet link and runs it
-// =========================================
-
-links = document.getElementsByTagName("a")
-for (i in links) if (links[i].href.substring(0,7) == "magnet:") 
-		window.location.replace(links[i].href)
+// if there was a good torrent found, display the name and launch torrent link
+if (typeof(magnetHref) == "string") {
+	window.location.replace(magnetHref)
+	alert("DOWNLOADING MAGNET: \n\nTitle: "+magnetTitle+"\n\nSeeders: "+minSeeds)
+	window.close()
+}
 
 // functions
 // =========
