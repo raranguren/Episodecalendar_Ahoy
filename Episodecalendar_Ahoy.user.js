@@ -3,9 +3,10 @@
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
 	
-// @version      4.2
+// @version      4.3
 // @date         2016/09/10
 // @grant        none
+// @run-at       document-idle
 
 // @include      http*://episodecalendar.com/*calendar*
 // @include      http*://extratorrent.cc*
