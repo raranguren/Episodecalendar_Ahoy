@@ -3,9 +3,10 @@
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
 	
-// @version      4.3
-// @date         2016/09/10
+// @version      4.5
+// @date         2017-02-16
 // @grant        none
+// @noframes
 // @run-at       document-idle
 
 // @include      http*://episodecalendar.com/*calendar*
@@ -13,7 +14,8 @@
 
 // ==/UserScript==
 
-searchURL = 'http://extratorrent.cc/search/?search=*'
+// searchURL = 'http://extratorrent.cc/search/?search=*'
+searchURL = "https://thepiratebay.org/search/*/0/7"
 magnetIcon = "http://images4et.com/images/magnet.png"
 
 // This part runs in episodecalendar.com
@@ -34,7 +36,7 @@ if (boxes.length) for (j in boxes) if (j>0) { i = j-1;
     //clean titles
     episodes[i].childNodes[0].innerHTML = ""
 	//add link to torrent search with format: episodename s00e00
-	episodeHref = searchURL.replace("*",episodeName(showName,season,episode, false))
+	episodeHref = searchURL.replace("*",episodeName(showName,season,episode))
 	episodes[i].appendChild(imageLink(episodeHref,magnetIcon));
 }
 
@@ -60,11 +62,7 @@ if (typeof(magnetHref) == "string") {
 // =========
 
 function episodeName(show, season, episode, x = false) {
-	if (x) {
-		return show.replace(/[\d()]/g,"").replace(/ +/g," ") + ' ' + season*1 + "x" + ~~(episode/10) + (episode%10);
-	} else {
-		return show.replace(/[\d()]/g,"").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10);
-	}
+	return show.replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10);
 }
 
 function imageLink(href,src) {
