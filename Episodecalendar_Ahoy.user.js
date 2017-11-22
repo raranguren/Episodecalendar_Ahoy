@@ -3,8 +3,8 @@
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
 	
-// @version      4.5
-// @date         2017-02-16
+// @version      4.7
+// @date         2017-11-09
 // @grant        none
 // @noframes
 // @run-at       document-idle
@@ -14,9 +14,10 @@
 
 // ==/UserScript==
 
-// searchURL = 'http://extratorrent.cc/search/?search=*'
-searchURL = "https://thepiratebay.org/search/*/0/7"
-magnetIcon = "http://images4et.com/images/magnet.png"
+//searchURL = 'http://extratorrent.cc/search/?search=*'
+//searchURL = "https://thepiratebay.org/search/*/0/7"
+searchURL = "https://rarbgmirror.xyz/torrents.php?search=*&category%5B%5D=18&category%5B%5D=41&category%5B%5D=49"
+magnetIcon = "https://games4theworld.org/wp-content/uploads/2016/08/magnet_url.png"
 
 // This part runs in episodecalendar.com
 // =====================================
