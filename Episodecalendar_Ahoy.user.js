@@ -2,7 +2,7 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
-// @version      5.0
+// @version      5.1
 // @date         2021-07-11
 // @grant        none
 // @noframes
@@ -34,17 +34,15 @@
                     var numbersFound = episodeLabel.match(/\d+/g);
                     var episode = numbersFound[numbersFound.length - 1];
                     var season = numbersFound[numbersFound.length - 2];
-                    //add link to torrent search with format: episodename s00e00
-                    var episodeHref = SEARCH_URL.replace("*",episodeName(showName,season,episode));
-                    episodes[i].appendChild(imageLink(episodeHref,MAGNET_ICON));
+                    episodes[i].appendChild(imageLink(searchUrl(showName,season,episode),MAGNET_ICON));
                     checkBoxes[i].classList.add("ahoy");
                 }
             }
         }
     }
 
-    function episodeName(show, season, episode, x = false) {
-        return show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10);
+    function searchUrl(show, season, episode, x = false) {
+        return SEARCH_URL.replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
     }
 
     function imageLink(href,src) {
