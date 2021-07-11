@@ -2,7 +2,7 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
-// @version      5.1
+// @version      5.2
 // @date         2021-07-11
 // @grant        none
 // @noframes
@@ -15,14 +15,29 @@
     'use strict';
 
     const SEARCH_URL = "https://thepiratebay.org/search/*/0/7";
+    function searchUrl(show, season, episode, x = false) {
+        return SEARCH_URL.replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
+    }
+
     const MAGNET_ICON = "data:image/gif;base64," +
           "R0lGODlhDAAMALMPAOXl5ewvErW1tebm5oocDkVFRePj47a2ts0WAOTk5MwVAIkcDesuEs0VAEZGRv" +
           "///yH5BAEAAA8ALAAAAAAMAAwAAARB8MnnqpuzroZYzQvSNMroUeFIjornbK1mVkRzUgQSyPfbFi" +
           "/dBRdzCAyJoTFhcBQOiYHyAABUDsiCxAFNWj6UbwQAOw==";
+    function imageLink(href,src) {
+        var link = document.createElement('a');
+        link.target = "_blank";
+        link.href = href;
+        link.style.position = 'relative';
+        link.style.top = '1px';
+        link.style.paddingLeft = '2px';
+        var img = document.createElement('img');
+        img.src = src;
+        img.height = 10;
+        link.appendChild(img);
+        return link;
+    }
 
-    $(document).ajaxComplete(() => addMagnetLinkToShows());
-
-    function addMagnetLinkToShows() {
+    $(document).ajaxComplete(() => {
         const shows = document.getElementsByClassName("show");
         const episodes = document.getElementsByClassName("episode");
         const checkBoxes = document.getElementsByClassName("checkbox-wrapper");
@@ -39,24 +54,6 @@
                 }
             }
         }
-    }
-
-    function searchUrl(show, season, episode, x = false) {
-        return SEARCH_URL.replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
-    }
-
-    function imageLink(href,src) {
-        var link = document.createElement('a');
-        link.target = "_blank";
-        link.href = href;
-        link.style.position = 'relative';
-        link.style.top = '1px';
-        link.style.paddingLeft = '2px';
-        var img = document.createElement('img');
-        img.src = src;
-        img.height = 10;
-        link.appendChild(img);
-        return link;
-    }
+    });
 
 })();
