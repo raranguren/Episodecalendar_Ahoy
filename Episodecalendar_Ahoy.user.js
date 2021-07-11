@@ -2,12 +2,12 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
-// @version      4.12
-// @date         2021-07-08
+// @version      5.0
+// @date         2021-07-11
 // @grant        none
 // @noframes
 // @run-at       document-idle
-// @include      http*://episodecalendar.com/*calendar*
+// @include      http*://episodecalendar.com/*
 
 // ==/UserScript==
 
@@ -20,26 +20,25 @@
           "///yH5BAEAAA8ALAAAAAAMAAwAAARB8MnnqpuzroZYzQvSNMroUeFIjornbK1mVkRzUgQSyPfbFi" +
           "/dBRdzCAyJoTFhcBQOiYHyAABUDsiCxAFNWj6UbwQAOw==";
 
-    const shows = document.getElementsByClassName("show");
-    const episodes = document.getElementsByClassName("episode");
-    const boxes = document.getElementsByClassName("checkbox-wrapper");
-    if (boxes.length) {
-        for (let j in boxes) {
-            if (j > 0) {
-                var i = j-1;
-                //get the show name
-                var showName = shows[i].innerHTML;
-                //get the episode ID and convert into format: s00e00
-                var showTip = episodes[i].innerHTML
-                episodes[i].innerHTML = " ";
-                var numbersFound = showTip.match(/\d+/g);
-                var episode = numbersFound[numbersFound.length - 1];
-                var season = numbersFound[numbersFound.length - 2];
-                //clean titles
-                episodes[i].childNodes[0].innerHTML = "";
-                //add link to torrent search with format: episodename s00e00
-                var episodeHref = SEARCH_URL.replace("*",episodeName(showName,season,episode));
-                episodes[i].appendChild(imageLink(episodeHref,MAGNET_ICON));
+    $(document).ajaxComplete(() => addMagnetLinkToShows());
+
+    function addMagnetLinkToShows() {
+        const shows = document.getElementsByClassName("show");
+        const episodes = document.getElementsByClassName("episode");
+        const checkBoxes = document.getElementsByClassName("checkbox-wrapper");
+        if (checkBoxes.length) {
+            for (let i = 0; i < checkBoxes.length; i++) {
+                if (shows[i] && episodes[i] && !checkBoxes[i].classList.contains("ahoy")) {
+                    var showName = shows[i].innerHTML;
+                    var episodeLabel = episodes[i].innerHTML;
+                    var numbersFound = episodeLabel.match(/\d+/g);
+                    var episode = numbersFound[numbersFound.length - 1];
+                    var season = numbersFound[numbersFound.length - 2];
+                    //add link to torrent search with format: episodename s00e00
+                    var episodeHref = SEARCH_URL.replace("*",episodeName(showName,season,episode));
+                    episodes[i].appendChild(imageLink(episodeHref,MAGNET_ICON));
+                    checkBoxes[i].classList.add("ahoy");
+                }
             }
         }
     }
