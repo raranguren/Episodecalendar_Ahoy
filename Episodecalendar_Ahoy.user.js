@@ -2,8 +2,8 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds torrent downloads to episodecalendar.com
-// @version      5.2
-// @date         2021-07-11
+// @version      5.3
+// @date         2021-08-22
 // @grant        none
 // @noframes
 // @run-at       document-idle
@@ -14,11 +14,10 @@
 (function() {
     'use strict';
 
-    const SEARCH_URL = "https://thepiratebay.org/search/*/0/7";
+    const SEARCH_URL = "https://pirateproxy.space/search/*/0/7";
     function searchUrl(show, season, episode, x = false) {
         return SEARCH_URL.replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
     }
-
     const MAGNET_ICON = "data:image/gif;base64," +
           "R0lGODlhDAAMALMPAOXl5ewvErW1tebm5oocDkVFRePj47a2ts0WAOTk5MwVAIkcDesuEs0VAEZGRv" +
           "///yH5BAEAAA8ALAAAAAAMAAwAAARB8MnnqpuzroZYzQvSNMroUeFIjornbK1mVkRzUgQSyPfbFi" +
