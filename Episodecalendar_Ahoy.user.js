@@ -2,7 +2,7 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds download links to episodecalendar.com
-// @version      6.0
+// @version      6.1
 // @grant        none
 // @noframes
 // @run-at       document-idle
@@ -15,15 +15,21 @@
 
     // CONFIG
     const SEARCH_URL = "https://thepiratebay.org/search/*/0/7";
-    function searchUrl(show, season, episode, x = false) {
-        return SEARCH_URL.replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
-    }
+    const searchMagnetUrl = (show, season, episode, x = false) => SEARCH_URL
+        .replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
+    const STREAM_URL = "https://flixtor.video/tag/*";
+    const searchStreamUrl = (show) => STREAM_URL
+        .replace("*",show.replace("'","").replace("-"," ").replace(/\s?[^\s\w].*/g,"").replace(/\W/g,"-").toLowerCase());
 
     // ASSETS
     const MAGNET_ICON = "data:image/gif;base64," +
           "R0lGODlhDAAMALMPAOXl5ewvErW1tebm5oocDkVFRePj47a2ts0WAOTk5MwVAIkcDesuEs0VAEZGRv" +
           "///yH5BAEAAA8ALAAAAAAMAAwAAARB8MnnqpuzroZYzQvSNMroUeFIjornbK1mVkRzUgQSyPfbFi" +
           "/dBRdzCAyJoTFhcBQOiYHyAABUDsiCxAFNWj6UbwQAOw==";
+    const TICKET_ICON = "data:image/png;base64," +
+          "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAG1BMVEUXorgWorhHcEwWorgXorgXorgXorgXorgXorh6A0jNAAAACHRSTlPRHgBpOUOdecxab" +
+          "/EAAABlSURBVBiVTZBbDgAhCAOLAvb+J96qK+qHZiYpD9HOGbYeHAbprxAzHgF2o10hjjRY+BZiJ9MUMxRvM3CZ0QlFZn6xT24YyuXlhlUpixXxUL+Mn3dbzXR4i1m0dpiXX" +
+          "/5Ht1G/8AHdHwOBg/TDkwAAAABJRU5ErkJggg==";
 
 
     // Creates an image element wrapped with an hyperlink
@@ -46,7 +52,12 @@
         var numbersFound = episodeLabel.match(/\d+/g);
         var episode = numbersFound[numbersFound.length - 1];
         var season = numbersFound[numbersFound.length - 2];
-        return imageLink(searchUrl(showName,season,episode),MAGNET_ICON);
+        return imageLink(searchMagnetUrl(showName,season,episode),MAGNET_ICON);
+    }
+
+    // Creates streaming link for a show name
+    function streamLink(showName) {
+        return imageLink(searchStreamUrl(showName), TICKET_ICON);
     }
 
     // Parse each element of an HTML collection and mark them as already parsed
@@ -98,6 +109,7 @@
                 let episodeLabel = getElementsByClassNameOrRun(item, getEpisodeLabels)[0].innerText;
                 let container = getElementsByClassNameOrRun(item, getContainers)[0];
                 container.appendChild(magnetLink(showName, episodeLabel));
+                container.appendChild(streamLink(showName));
             }
         });
     }
