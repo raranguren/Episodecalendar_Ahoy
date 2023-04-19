@@ -2,8 +2,9 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds download links to episodecalendar.com
-// @version      6.1
+// @version      6.1.1
 // @grant        none
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=episodecalendar.com
 // @noframes
 // @run-at       document-idle
 // @match        http*://episodecalendar.com/*
