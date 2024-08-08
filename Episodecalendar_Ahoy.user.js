@@ -2,7 +2,7 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds download links to episodecalendar.com
-// @version      6.1.1
+// @version      6.1.2
 // @grant        none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=episodecalendar.com
 // @noframes
@@ -18,7 +18,7 @@
     const SEARCH_URL = "https://thepiratebay.org/search/*/0/7";
     const searchMagnetUrl = (show, season, episode, x = false) => SEARCH_URL
         .replace("*",show.replace("'","").replace(/ +/g," ") + ' s' + ~~(season/10) + (season%10) + 'e' + ~~(episode/10) + (episode%10));
-    const STREAM_URL = "https://flixtor.video/tag/*";
+    const STREAM_URL = "https://theflixtor.to/tag/*";
     const searchStreamUrl = (show) => STREAM_URL
         .replace("*",show.replace("'","").replace("-"," ").replace(/\s?[^\s\w].*/g,"").replace(/\W/g,"-").toLowerCase());
 
