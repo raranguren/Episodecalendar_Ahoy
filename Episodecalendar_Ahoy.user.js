@@ -2,7 +2,7 @@
 // @name         Episodecalendar Ahoy
 // @namespace    n/a
 // @description	 Adds download links to episodecalendar.com
-// @version      6.1.2
+// @version      6.2
 // @grant        none
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=episodecalendar.com
 // @noframes
@@ -21,7 +21,9 @@
     const STREAM_URL = "https://theflixtor.to/tag/*";
     const searchStreamUrl = (show) => STREAM_URL
         .replace("*",show.replace("'","").replace("-"," ").replace(/\s?[^\s\w].*/g,"").replace(/\W/g,"-").toLowerCase());
-
+    const useMagnetLinks = true;
+    const useStreamLinks = false;
+    
     // ASSETS
     const MAGNET_ICON = "data:image/gif;base64," +
           "R0lGODlhDAAMALMPAOXl5ewvErW1tebm5oocDkVFRePj47a2ts0WAOTk5MwVAIkcDesuEs0VAEZGRv" +
@@ -109,8 +111,10 @@
                 let showName = getElementsByClassNameOrRun(item, getShowNames)[0].innerText;
                 let episodeLabel = getElementsByClassNameOrRun(item, getEpisodeLabels)[0].innerText;
                 let container = getElementsByClassNameOrRun(item, getContainers)[0];
-                container.appendChild(magnetLink(showName, episodeLabel));
-                container.appendChild(streamLink(showName));
+                if (useMagnetLinks)
+                    container.appendChild(magnetLink(showName, episodeLabel));
+                if (useStreamLinks)
+                    container.appendChild(streamLink(showName));
             }
         });
     }
